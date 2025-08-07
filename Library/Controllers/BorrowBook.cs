@@ -13,14 +13,12 @@ namespace Library.Controllers
     {
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> borrowbook(int userid,int bookid)
+        public async Task<IActionResult> borrowbook(int bookid)
         {
-            var book =await context.books.FirstOrDefaultAsync(x => x.id == bookid);
+            var book =await context.books.FirstOrDefaultAsync(x => x.id == bookid);var userid=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if(book!=null&&book.IsAvalable==true)
             {
-                var user=await context.users.FindAsync(userid);
-                if(user!=null)
-                {
+                
                     BorrowedBooks borrowed = new BorrowedBooks
                     {
                         userId = userid,
@@ -32,7 +30,7 @@ namespace Library.Controllers
                     await context.SaveChangesAsync();
                     return Ok("borrow book");
 
-                }
+                
             }
             return Ok("user or book is notfound");
         }
