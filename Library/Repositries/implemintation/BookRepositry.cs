@@ -40,6 +40,7 @@ namespace Library.Repositries.implemintation
             {
                 b.Title = book.Title;
                 b.authorname = book.authorname;
+                 b.IsAvalable = book.IsAvalable;
             }
             await context.SaveChangesAsync();
         }
